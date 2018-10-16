@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>居民诉求管理系统</title>
+    <!-- Bootstrap Styles-->
+    <link href="/assets/css/bootstrap.css" rel="stylesheet" />
+    <!-- FontAwesome Styles-->
+    <link href="/assets/css/font-awesome.css" rel="stylesheet" />
+    <!-- Morris Chart Styles-->
+    <link href="/assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
+    <!-- Custom Styles-->
+    <link href="/assets/css/custom-styles.css" rel="stylesheet" />
+    <!-- Google Fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+</head>
+
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default top-navbar" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index.html">管理系统</a>
+            </div>
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> admin</li>
+                        <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+                    <li>
+                        <a href="../index.html"><i class="fa fa-dashboard"></i> 总览</a>
+                    </li>
+                    <li>
+                        <a href="../form.html"><i class="fa fa-edit"></i> 信息提交</a>
+                    </li>
+                    <li>
+                        <a href="../table.html"><i class="fa fa-table"></i> 综合查询</a>
+                    </li>
+					          <li>
+                        <a href="../chart.html"><i class="fa fa-bar-chart-o"></i> 图表</a>
+                    </li>
+                    <li class="active">
+                        <a href="#"><i class="fa fa-sitemap"></i> 事件分类查询<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="city-management.html">城市管理</a>
+                            </li>
+                            <li>
+                                <a href="planning-construction.html">规划建设</a>
+                            </li>
+                            <li>
+                                <a href="house-removal.html">征地拆迁</a>
+                            </li>
+                            <li>
+                                <a href="contract-dispute.html">合同纠纷</a>
+                            </li>
+                            <li>
+                                <a href="property-management.html">物业管理</a>
+                            </li>
+                            <li>
+                                <a href="environment-protection.html">环境保护</a>
+                            </li>
+                            <li>
+                                <a href="social-affairs.html">社会事务</a>
+                            </li>
+                            <li>
+                                <a href="public-security.html">社会治安</a>
+                            </li>
+                            <li>
+                                <a href="staff-administration.html">干部管理</a>
+                            </li>
+                            <li>
+                                <a class="active-menu" href="general-election.html">换届选举</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-sitemap"></i> 平台分类查询<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="../platform/mayor-phone.html">市长公开电话</a>
+                            </li>
+                            <li>
+                                <a href="../platform/mayor-mailbox.html">市长信箱</a>
+                            </li>
+                            <li>
+                                <a href="../platform/new-web.html">网络新媒体</a>
+                            </li>
+                            <li>
+                                <a href="../platform/warden-mailbox.html">区长信箱</a>
+                            </li>
+                            <li>
+                                <a href="../platform/renmin-website.html">人民网</a>
+                            </li>
+                            <li>
+                                <a href="../platform/hotline.html">文明热线</a>
+                            </li>
+                            <li>
+                                <a href="../platform/web-politic.html">网络理政</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper">
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">
+                            居民诉求管理系统 <small>总览</small>
+                        </h1>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="page-header">
+                            反映问题平台总览
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 col-sm-12 col-xs-12">
+                        <div class="panel panel-primary text-center no-boder bg-color-green green">
+                            <div class="panel-left pull-left green">
+                                <i class="fa fa-phone fa-5x"></i>
+                            </div>
+                            <div class="panel-right pull-right">
+								               <h3>282 </h3>
+                               <strong> 市长公开电话</strong><br/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12 col-xs-12">
+                        <div class="panel panel-primary text-center no-boder bg-color-blue blue">
+                              <div class="panel-left pull-left blue">
+                                <i class="fa fa-envelope-o fa-5x"></i>
+								               </div>
+                            <div class="panel-right pull-right">
+							                 <h3>50 </h3>
+                               <strong> 市长信箱</strong><br/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12 col-xs-12">
+                        <div class="panel panel-primary text-center no-boder bg-color-red red">
+                            <div class="panel-left pull-left red">
+                                <i class="fa fa fa-cloud fa-5x"></i>
+                            </div>
+                            <div class="panel-right pull-right">
+							                 <h3>49 </h3>
+                               <strong> 网络新媒体</strong><br/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12 col-xs-12">
+                        <div class="panel panel-primary text-center no-boder bg-color-brown brown">
+                            <div class="panel-left pull-left brown">
+                                <i class="fa fa-users fa-5x"></i>
+                            </div>
+                            <div class="panel-right pull-right">
+							               <h3>468 </h3>
+                             <strong> 合计</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="page-header">
+                            反映问题类别总览
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="row">
+            			<div class="col-xs-6 col-md-3">
+            				<div class="panel panel-default">
+            					<div class="panel-body easypiechart-panel">
+            						<h4>环境保护</h4>
+            						<div class="easypiechart" id="easypiechart-1" data-percent="37" ><span class="percent">37%</span>
+            						</div>
+            					</div>
+            				</div>
+            			</div>
+            			<div class="col-xs-6 col-md-3">
+            				<div class="panel panel-default">
+            					<div class="panel-body easypiechart-panel">
+            						<h4>城市管理</h4>
+            						<div class="easypiechart" id="easypiechart-2" data-percent="21" ><span class="percent">21%</span>
+            						</div>
+            					</div>
+            				</div>
+            			</div>
+            			<div class="col-xs-6 col-md-3">
+            				<div class="panel panel-default">
+            					<div class="panel-body easypiechart-panel">
+            						<h4>社会事务</h4>
+            						<div class="easypiechart" id="easypiechart-3" data-percent="17" ><span class="percent">17%</span>
+            						</div>
+            					</div>
+            				</div>
+            			</div>
+                  <div class="col-xs-6 col-md-3">
+            				<div class="panel panel-default">
+            					<div class="panel-body easypiechart-panel">
+            						<h4>规划建设</h4>
+            						<div class="easypiechart" id="easypiechart-4" data-percent="8" ><span class="percent">8%</span>
+            						</div>
+            					</div>
+            				</div>
+            			</div>
+            		</div>
+
+                  <footer>
+                    <p>All right reserved. LR Workshop&copy</p>
+                  </footer>
+
+              </div>
+            </div>
+          </div>
+
+    <!-- JS Scripts-->
+    <!-- jQuery Js -->
+    <script src="/assets/js/jquery-1.10.2.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Js -->
+    <script src="/assets/js/jquery.metisMenu.js"></script>
+    <!-- Morris Chart Js -->
+    <script src="/assets/js/morris/raphael-2.1.0.min.js"></script>
+    <script src="/assets/js/morris/morris.js"></script>
+	  <script src="/assets/js/easypiechart.js"></script>
+	  <script src="/assets/js/easypiechart-data.js"></script>
+    <script src="/assets/js/custom-scripts.js"></script>
+</body>
+
+</html>
