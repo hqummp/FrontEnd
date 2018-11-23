@@ -1,203 +1,605 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>居民诉求管理系统</title>
-  <!-- Bootstrap Styles-->
-  <link href="assets/css/bootstrap.css" rel="stylesheet" />
-  <!-- FontAwesome Styles-->
-  <link href="assets/css/font-awesome.css" rel="stylesheet" />
-  <!-- Morris Chart Styles-->
-  <link href="assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
-  <!-- Custom Styles-->
-  <link href="assets/css/custom-styles.css" rel="stylesheet" />
-  <!-- Google Fonts-->
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>居民诉求管理系统</title><!-- Bootstrap Styles-->
+<link href="assets/css/bootstrap.css" rel="stylesheet"/>
+<!-- FontAwesome Styles-->
+<link href="assets/css/font-awesome.css" rel="stylesheet"/>
+<!-- Custom Styles-->
+<link href="assets/css/custom-styles.css" rel="stylesheet"/>
+<!-- Google Fonts-->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+<link href="assets/css/datepicker.css" rel="stylesheet">
 </head>
 <body>
-  <div id="wrapper">
-      <nav class="navbar navbar-default top-navbar" role="navigation">
-          <div class="navbar-header">
-              <a class="navbar-brand" href="index.html">管理系统</a>
-          </div>
-          <ul class="nav navbar-top-links navbar-right">
-              <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                      <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-                  </a>
-                  <ul class="dropdown-menu dropdown-user">
-                      <li><a href="#"><i class="fa fa-user fa-fw"></i> admin</li>
-                      <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                      </li>
-                  </ul>
-              </li>
-          </ul>
-      </nav>
-      <nav class="navbar-default navbar-side" role="navigation">
-          <div class="sidebar-collapse">
-              <ul class="nav" id="main-menu">
-                  <li>
-                      <a href="index.html"><i class="fa fa-dashboard"></i> 总览</a>
-                  </li>
-                  <li>
-                      <a href="form.html"><i class="fa fa-edit"></i> 信息提交</a>
-                  </li>
-                  <li>
-                      <a href="table.html"><i class="fa fa-table"></i> 综合查询</a>
-                  </li>
-                  <li>
-                      <a class="active-menu" href="chart.html"><i class="fa fa-bar-chart-o"></i> 图表</a>
-                  </li>
-                  <li>
-                      <a href="#"><i class="fa fa-sitemap"></i> 事件分类查询<span class="fa arrow"></span></a>
-                      <ul class="nav nav-second-level">
-                          <li>
-                              <a href="issues/city-management.html">城市管理</a>
-                          </li>
-                          <li>
-                              <a href="issues/planning-construction.html">规划建设</a>
-                          </li>
-                          <li>
-                              <a href="issues/house-removal.html">征地拆迁</a>
-                          </li>
-                          <li>
-                              <a href="issues/contract-dispute.html">合同纠纷</a>
-                          </li>
-                          <li>
-                              <a href="issues/property-management.html">物业管理</a>
-                          </li>
-                          <li>
-                              <a href="issues/environment-protection.html">环境保护</a>
-                          </li>
-                          <li>
-                              <a href="issues/social-affairs.html">社会事务</a>
-                          </li>
-                          <li>
-                              <a href="issues/public-security.html">社会治安</a>
-                          </li>
-                          <li>
-                              <a href="issues/staff-administration.html">干部管理</a>
-                          </li>
-                          <li>
-                              <a href="issues/general-election.html">换届选举</a>
-                          </li>
-                      </ul>
-                  </li>
-                  <li>
-                      <a href="#"><i class="fa fa-sitemap"></i> 平台分类查询<span class="fa arrow"></span></a>
-                      <ul class="nav nav-second-level">
-                          <li>
-                              <a href="platform/mayor-phone.html">市长公开电话</a>
-                          </li>
-                          <li>
-                              <a href="platform/mayor-mailbox.html">市长信箱</a>
-                          </li>
-                          <li>
-                              <a href="platform/new-web.html">网络新媒体</a>
-                          </li>
-                          <li>
-                              <a href="platform/warden-mailbox.html">区长信箱</a>
-                          </li>
-                          <li>
-                              <a href="platform/renmin-website.html">人民网</a>
-                          </li>
-                          <li>
-                              <a href="platform/hotline.html">文明热线</a>
-                          </li>
-                          <li>
-                              <a href="platform/web-politic.html">网络理政</a>
-                          </li>
-                      </ul>
-                  </li>
-              </ul>
-          </div>
-      </nav>
-        <!-- /. NAV SIDE  -->
-        <div id="page-wrapper" >
-            <div id="page-inner">
-			 <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="page-header">
-                            Charts <small>Show up your stats</small>
-                        </h1>
-                    </div>
-                </div>
-                 <!-- /. ROW  -->
-
-                <div class="row">
-
-
-                               <div class="col-md-6 col-sm-12 col-xs-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Bar Chart
-                        </div>
-                        <div class="panel-body">
-                            <div id="morris-bar-chart"></div>
-                        </div>
-                    </div>
-                </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Area Chart
-                        </div>
-                        <div class="panel-body">
-                            <div id="morris-area-chart"></div>
-                        </div>
-                    </div>
-                </div>
-
-           </div>
-                 <!-- /. ROW  -->
-                <div class="row">
-
-                               <div class="col-md-6 col-sm-12 col-xs-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Line Chart
-                        </div>
-                        <div class="panel-body">
-                            <div id="morris-line-chart"></div>
-                        </div>
-                    </div>
-                </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Donut Chart
-                        </div>
-                        <div class="panel-body">
-							<div id="morris-donut-chart"></div>
-                        </div>
-                    </div>
-                </div>
-
-           </div>
-                 <!-- /. ROW  -->
-                 <footer>
-                   <p>All right reserved. LR Workshop&copy</p>
-                 </footer>
+<div id="wrapper">
+	<nav class="navbar navbar-default top-navbar" role="navigation">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">管理系统</a>
+	</div>
+	<ul class="nav navbar-top-links navbar-right">
+		<li class="dropdown">
+		<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+		<i class="fa fa-user fa-fw"></i><i class="fa fa-caret-down"></i>
+		</a>
+		<ul class="dropdown-menu dropdown-user">
+			<li><a href="#"><i class="fa fa-user fa-fw"></i> admin</li>
+			<li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+			</li>
+		</ul>
+		</li>
+	</ul>
+	</nav>
+	<nav class="navbar-default navbar-side" role="navigation">
+	<div class="sidebar-collapse">
+		<ul class="nav" id="main-menu">
+			<li>
+			<a href="index.html"><i class="fa fa-dashboard"></i> 总览</a>
+			</li>
+			<li>
+			<a href="form.html"><i class="fa fa-edit"></i> 信息提交</a>
+			</li>
+			<li>
+			<a href="table.html"><i class="fa fa-table"></i> 综合查询</a>
+			</li>
+			<li>
+			<a class="active-menu" href="chart.html"><i class="fa fa-bar-chart-o"></i> 图表</a>
+			</li>
+			<li>
+			<a href="#"><i class="fa fa-sitemap"></i> 事件分类查询<span class="fa arrow"></span></a>
+			<ul class="nav nav-second-level">
+				<li>
+				<a href="issues/city-management.html">城市管理</a>
+				</li>
+				<li>
+				<a href="issues/planning-construction.html">规划建设</a>
+				</li>
+				<li>
+				<a href="issues/house-removal.html">征地拆迁</a>
+				</li>
+				<li>
+				<a href="issues/contract-dispute.html">合同纠纷</a>
+				</li>
+				<li>
+				<a href="issues/property-management.html">物业管理</a>
+				</li>
+				<li>
+				<a href="issues/environment-protection.html">环境保护</a>
+				</li>
+				<li>
+				<a href="issues/social-affairs.html">社会事务</a>
+				</li>
+				<li>
+				<a href="issues/public-security.html">社会治安</a>
+				</li>
+				<li>
+				<a href="issues/staff-administration.html">干部管理</a>
+				</li>
+				<li>
+				<a href="issues/general-election.html">换届选举</a>
+				</li>
+			</ul>
+			</li>
+			<li>
+			<a href="#"><i class="fa fa-sitemap"></i> 平台分类查询<span class="fa arrow"></span></a>
+			<ul class="nav nav-second-level">
+				<li>
+				<a href="platform/mayor-phone.html">市长公开电话</a>
+				</li>
+				<li>
+				<a href="platform/mayor-mailbox.html">市长信箱</a>
+				</li>
+				<li>
+				<a href="platform/new-web.html">网络新媒体</a>
+				</li>
+				<li>
+				<a href="platform/warden-mailbox.html">区长信箱</a>
+				</li>
+				<li>
+				<a href="platform/renmin-website.html">人民网</a>
+				</li>
+				<li>
+				<a href="platform/hotline.html">文明热线</a>
+				</li>
+				<li>
+				<a href="platform/web-politic.html">网络理政信箱督办单</a>
+				</li>
+			</ul>
+			</li>
+		</ul>
+	</div>
+	</nav>
+	<!-- /. NAV SIDE  -->
+	<div id="page-wrapper">
+		<div id="page-inner">
+			<div class="row">
+				<div class="col-md-12">
+					<h1 class="page-header">
+                            图表
+                        <small>综合分析</small>
+					</h1>
 				</div>
-             <!-- /. PAGE INNER  -->
+			</div>
+			<!-- /. ROW  -->
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+                            反映问题平台统计
+						</div>
+						<div class="panel-body">
+							<div id="source-chart">
+							</div>
+						</div>
+					</div>
+				</div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+                            反映问题平台统计柱状图
+						</div>
+						<div class="panel-body">
+							<div id="category-chart-column">
+							</div>
+						</div>
+					</div>
+				</div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+                            反映问题平台统计饼状图
+						</div>
+						<div class="panel-body">
+							<div id="category-chart-pie">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-header">
+                        图表
+                        <small>具体分析</small>
+                    </h1>
+                </div>
             </div>
-         <!-- /. PAGE WRAPPER  -->
-        </div>
-     <!-- /. WRAPPER  -->
-    <!-- JS Scripts-->
-    <!-- jQuery Js -->
-    <script src="assets/js/jquery-1.10.2.js"></script>
-      <!-- Bootstrap Js -->
-    <script src="assets/js/bootstrap.min.js"></script>
-    <!-- Metis Menu Js -->
-    <script src="assets/js/jquery.metisMenu.js"></script>
-     <!-- Morris Chart Js -->
-     <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
-    <script src="assets/js/morris/morris.js"></script>
-      <!-- Custom Js -->
-    <script src="assets/js/custom-scripts.js"></script>
+            <div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+                            按反映问题平台分析
+						</div>
+						<div class="panel-body">
+                            <div>
+                                <label>反应平台</label>
+                                <select id="source-select" class="form-control" style="width: 40%">
+                                    <option>请选择</option>
+                                    <option>市长公开电话</option>
+                                    <option>市长信箱</option>
+                                    <option>网络新媒体</option>
+                                    <option>区长信箱</option>
+                                    <option>人民网</option>
+                                    <option>文明办</option>
+                                    <option>网络理政信箱督办单</option>
+                                </select>
+                            </div>
+							<div id="source-detail-analysis-chart">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+            <div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+                            按反映问题类别及时间分析
+						</div>
+						<div class="panel-body">
+                            <div class="form-group">
+                                <label>反应问题</label>
+                                <select id="issue-select" class="form-control" style="width: 40%">
+                                    <option>请选择</option>
+                                    <option>环境保护</option>
+                                    <option>城市管理</option>
+                                    <option>社会事务</option>
+                                    <option>规划建设</option>
+                                    <option>征地拆迁</option>
+                                    <option>物业管理</option>
+                                    <option>干部管理</option>
+                                    <option>合同纠纷</option>
+                                    <option>社会治安</option>
+                                    <option>换届选举</option>
+                                </select>
+                            </div>
+                            <div id="precision-select-div" class="form-group" style="display: none">
+                                <label>精确度</label>
+                                <select id="precision-select" class="form-control" style="width: 40%">
+                                    <option>请选择</option>
+                                    <option>精确到年</option>
+                                    <option>精确到月</option>
+                                    <option>精确到日</option>
+                                </select>
+                            </div>
+                            <div id="timepicker" class="form-group" style="display: none">
+                                <label>请填写日期</label>
+                                <br/>
+                                <div id="time_start" class="c-datepicker-date-editor c-datepicker-single-editor mt10">
+                                    <i class="c-datepicker-range__icon kxiconfont icon-clock"></i>
+                                    <input type="text" autocomplete="off" name="" placeholder="开始时间" class=" c-datepicker-data-input only-date" value="">
+                                </div>
+                                &nbsp;&nbsp;&nbsp;～&nbsp;&nbsp;&nbsp;
+                                <div id="time_end" class="c-datepicker-date-editor c-datepicker-single-editor mt10">
+                                    <i class="c-datepicker-range__icon kxiconfont icon-clock"></i>
+                                    <input type="text" autocomplete="off" name="" placeholder="结束时间" class=" c-datepicker-data-input only-date" value="">
+                                </div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <button id="category-detail-analysis-button" type="button" class="btn btn-default">确定</button>
+                            </div>
+							<div id="category-detail-analysis-chart">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
+			<footer>
+			<p>
+				All right reserved. LR Workshop&copy;
+			</p>
+			</footer>
+		</div>
+		<!-- /. PAGE INNER  -->
+	</div>
+	<!-- /. PAGE WRAPPER  -->
+</div>
+<!-- /. WRAPPER  --><!-- JS Scripts--><!-- jQuery Js -->
+<script src="assets/js/jquery-1.10.2.js"></script>
+<!-- Bootstrap Js -->
+<script src="assets/js/bootstrap.min.js"></script>
+<!-- Metis Menu Js -->
+<script src="assets/js/jquery.metisMenu.js"></script>
+<script src="assets/js/custom-scripts.js"></script>
+<script src="https://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+<script src="https://cdn.hcharts.cn/highcharts/modules/exporting.js"></script>
+<script src="https://cdn.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+<script src="http://cdn.hcharts.cn/highcharts/modules/export-data.js"></script>
+<script src="assets/js/moment.min.js"></script>
+<script src="assets/js/datepicker.all.min.js"></script>
+<script>
+var chart = null;
+var alldata;
+var source = ['市长公开电话', '市长信箱', '网络新媒体', '区长信箱', '人民网', '文明办', '网络理政信箱督办单'];
+var category = ['城市管理', '规划建设', '征地拆迁', '合同纠纷', '物业管理', '环境保护', '社会事务', '社会治安', '干部管理', '换届选举'];
+var years = ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028'];
+var months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+var lang_setting = {
+    printChart: '打印图表',
+    downloadJPEG: '下载 JPEG 文件',
+    downloadPDF: '下载 PDF   文件',
+    downloadPNG: '下载 PNG  文件',
+    downloadSVG: '下载 SVG  文件',
+    downloadCSV: '下载 CSV  文件',
+    downloadXLS: '下载 XLS   文件',
+    viewData: '查看数据表格'
+};
 
+$(document).ready(function() {
+    $.get("http://127.0.0.1:3000/alldata", function (result) {
+        console.log(result);
+        alldata = result;
+        $("#source-chart").highcharts({
+            lang: lang_setting,
+            chart: {
+                type: 'column',
+                zoomType: 'x',
+                panning: true
+            },
+            xAxis: {
+                categories: source,
+                title: {
+                    text: '反映问题平台'
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '件数 (个)'
+                }
+            },
+            title: {
+                text: '反映问题平台统计'
+            },
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                column: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            series: [{
+                name: '件数',
+                data: [
+                    result.filter(function (value) {return value.source == source[0]}).length,
+                    result.filter(function (value) {return value.source == source[1]}).length,
+                    result.filter(function (value) {return value.source == source[2]}).length,
+                    result.filter(function (value) {return value.source == source[3]}).length,
+                    result.filter(function (value) {return value.source == source[4]}).length,
+                    result.filter(function (value) {return value.source == source[5]}).length,
+                    result.filter(function (value) {return value.source == source[6]}).length,
+                ]
+            }]
+        });
+
+        $("#category-chart-column").highcharts({
+            lang: lang_setting,
+            chart: {
+                type: 'column',
+                zoomType: 'x',
+                panning: true
+            },
+            xAxis: {
+                categories: category,
+                title: {
+                    text: '反映问题'
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '件数 (个)'
+                }
+            },
+            title: {
+                text: '反映问题统计柱状图'
+            },
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                column: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            series: [{
+                name: '件数',
+                data: [
+                    result.filter(function (value) {return value.category == category[0]}).length,
+                    result.filter(function (value) {return value.category == category[1]}).length,
+                    result.filter(function (value) {return value.category == category[2]}).length,
+                    result.filter(function (value) {return value.category == category[3]}).length,
+                    result.filter(function (value) {return value.category == category[4]}).length,
+                    result.filter(function (value) {return value.category == category[5]}).length,
+                    result.filter(function (value) {return value.category == category[6]}).length,
+                    result.filter(function (value) {return value.category == category[7]}).length,
+                    result.filter(function (value) {return value.category == category[8]}).length,
+                    result.filter(function (value) {return value.category == category[9]}).length
+                ]
+            }]
+        });
+
+        $("#category-chart-pie").highcharts({
+            lang: lang_setting,
+            chart: {
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false,
+				type: 'pie'
+            },
+            title: {
+                text: '反映问题统计饼状图'
+            },
+            tooltip: {
+				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels: {
+                        enabled: true,
+						format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+						style: {
+							color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+						}
+					},
+                    showInLegend: true
+				}
+            },
+            series: [{
+                name: '件数',
+                colorByPoint: true,
+                data: [{
+                    name: category[0],
+                    y: result.filter(function (value) {return value.category == category[0]}).length
+                }, {
+                    name: category[1],
+                    y: result.filter(function (value) {return value.category == category[1]}).length
+                }, {
+                    name: category[2],
+                    y: result.filter(function (value) {return value.category == category[2]}).length
+                }, {
+                    name: category[3],
+                    y: result.filter(function (value) {return value.category == category[3]}).length
+                }, {
+                    name: category[4],
+                    y: result.filter(function (value) {return value.category == category[4]}).length
+                }, {
+                    name: category[5],
+                    y: result.filter(function (value) {return value.category == category[5]}).length
+                }, {
+                    name: category[6],
+                    y: result.filter(function (value) {return value.category == category[6]}).length
+                }, {
+                    name: category[7],
+                    y: result.filter(function (value) {return value.category == category[7]}).length
+                }, {
+                    name: category[8],
+                    y: result.filter(function (value) {return value.category == category[8]}).length
+                }, {
+                    name: category[9],
+                    y: result.filter(function (value) {return value.category == category[9]}).length
+                }]
+            }]
+        });
+    }, "json");
+});
+
+$(function () {
+    $("#source-select").change(function () {
+        console.log($("#source-select").find("option:selected").text());
+        $("#source-detail-analysis-chart").highcharts({
+            lang: lang_setting,
+            chart: {
+                type: 'column',
+                zoomType: 'x',
+                panning: true
+            },
+            xAxis: {
+                categories: category,
+                title: {
+                    text: '反映问题'
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '件数 (个)'
+                }
+            },
+            title: {
+                text: '反映问题统计分类：' + $("#source-select").find("option:selected").text()
+            },
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                column: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            series: [{
+                name: '数量',
+                data: [
+                    alldata.filter(function (value) {return (value.source == $("#source-select").find("option:selected").text() && value.category == category[0])}).length,
+                    alldata.filter(function (value) {return (value.source == $("#source-select").find("option:selected").text() && value.category == category[1])}).length,
+                    alldata.filter(function (value) {return (value.source == $("#source-select").find("option:selected").text() && value.category == category[2])}).length,
+                    alldata.filter(function (value) {return (value.source == $("#source-select").find("option:selected").text() && value.category == category[3])}).length,
+                    alldata.filter(function (value) {return (value.source == $("#source-select").find("option:selected").text() && value.category == category[4])}).length,
+                    alldata.filter(function (value) {return (value.source == $("#source-select").find("option:selected").text() && value.category == category[5])}).length,
+                    alldata.filter(function (value) {return (value.source == $("#source-select").find("option:selected").text() && value.category == category[6])}).length,
+                    alldata.filter(function (value) {return (value.source == $("#source-select").find("option:selected").text() && value.category == category[7])}).length,
+                    alldata.filter(function (value) {return (value.source == $("#source-select").find("option:selected").text() && value.category == category[8])}).length,
+                    alldata.filter(function (value) {return (value.source == $("#source-select").find("option:selected").text() && value.category == category[9])}).length
+                ]
+            }]
+        });
+    });
+});
+
+$(function() {
+    var DATAPICKERAPI = {
+		// 默认input显示当前月,自己获取后填充
+		activeMonthRange: function() {
+			return {
+				begin: moment().set({
+					'date': 1,
+					'hour': 0,
+					'minute': 0,
+					'second': 0
+				}).format('YYYY-MM-DD HH:mm:ss'),
+				end: moment().set({
+					'hour': 23,
+					'minute': 59,
+					'second': 59
+				}).format('YYYY-MM-DD HH:mm:ss')
+			}
+		},
+		shortcutMonth: function() {
+			// 当月
+			var nowDay = moment().get('date');
+			var prevMonthFirstDay = moment().subtract(1, 'months').set({
+				'date': 1
+			});
+			var prevMonthDay = moment().diff(prevMonthFirstDay, 'days');
+			return {
+				now: '-' + nowDay + ',0',
+				prev: '-' + prevMonthDay + ',-' + nowDay
+			}
+		},
+		// 注意为函数：快捷选项option:只能同一个月份内的
+		rangeMonthShortcutOption1: function() {
+			var result = DATAPICKERAPI.shortcutMonth();
+			return [{
+				name: '昨天',
+				day: '-1,-1',
+				time: '00:00:00,23:59:59'
+			}, {
+				name: '这一月',
+				day: result.now,
+				time: '00:00:00,'
+			}, {
+				name: '上一月',
+				day: result.prev,
+				time: '00:00:00,23:59:59'
+			}];
+		},
+		singleShortcutOptions1: [{
+			name: '今天',
+			day: '0'
+		}, {
+			name: '昨天',
+			day: '-1',
+			time: '00:00:00'
+		}, {
+			name: '一周前',
+			day: '-7'
+		}]
+	};
+
+    function time_selector_init (format) {
+        $('#time_start').datePicker({
+          format: format
+        });
+        $('#time_end').datePicker({
+          format: format
+        });
+    }
+
+    $("#issue-select").change(function () {
+        $("#precision-select-div").hide();
+        $("#precision-select-div").show();
+    });
+
+    $("#precision-select").change(function () {
+        switch ($("#precision-select").find("option:selected").text()) {
+            case "精确到年":
+                time_selector_init('YYYY');
+                break;
+            case "精确到月":
+                time_selector_init('YYYY-MM');
+                break;
+            case "精确到日":
+                time_selector_init('YYYY-MM-DD');
+                break;
+        }
+        $("#timepicker").show();
+    });
+
+});
+</script>
 </body>
 </html>

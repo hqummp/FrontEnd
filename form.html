@@ -12,6 +12,7 @@
 <!-- Custom Styles-->
 <link href="assets/css/custom-styles.css" rel="stylesheet"/>
 <link href="assets/css/datepicker.css" rel="stylesheet">
+<link href="assets/css/message.css" type="text/css" rel="stylesheet">
 <!-- Google Fonts-->
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
 </head>
@@ -147,19 +148,19 @@
 										</div>
                                         <div class="form-group">
 											<label>反应平台</label>
-											<select class="form-control">
+											<select id="source-select" class="form-control">
                                                 <option>市长公开电话</option>
                                                 <option>市长信箱</option>
                                                 <option>网络新媒体</option>
                                                 <option>区长信箱</option>
                                                 <option>人民网</option>
-                                                <option>文明热线</option>
-                                                <option>网络理政</option>
+                                                <option>文明办</option>
+                                                <option>网络理政信箱督办单</option>
                                             </select>
 										</div>
                                         <div class="form-group">
 											<label>反应问题</label>
-											<select class="form-control">
+											<select id="issue-select" class="form-control">
                                                 <option>环境保护</option>
                                                 <option>城市管理</option>
                                                 <option>社会事务</option>
@@ -174,11 +175,11 @@
 										</div>
 										<div class="form-group">
 											<label>附加标签</label>
-											<input class="form-control" placeholder="子问题">
+											<input id="subcategory" class="form-control" placeholder="子问题">
 										</div>
 									</form>
-                                    <button type="submit" class="btn btn-default">提交</button>
-                                    <button type="reset" class="btn btn-default">重置</button>
+                                    <button id="submit" type="submit" class="btn btn-primary btn-lg">提交</button>
+                                    <button id="reset" type="reset" class="btn btn-default btn-lg">重置</button>
 								</div>
 								<!-- /.col-lg-6 (nested) -->
 								<div class="col-lg-6">
@@ -186,15 +187,15 @@
 									<form role="form">
                                         <div class="form-group">
 											<label>反应内容</label>
-											<textarea class="form-control" rows="2"></textarea>
+											<textarea id="form-content" class="form-control" rows="2"></textarea>
 										</div>
                                         <div class="form-group">
 											<label>详细信息</label>
-											<textarea class="form-control" rows="4"></textarea>
+											<textarea id="form-info" class="form-control" rows="4"></textarea>
 										</div>
                                         <div class="form-group">
 											<label>备注</label>
-											<textarea class="form-control" rows="1"></textarea>
+											<textarea id="form-remark" class="form-control" rows="1"></textarea>
 										</div>
 									</form>
 								</div>
@@ -227,8 +228,67 @@
 <!-- Custom Js -->
 <script src="assets/js/custom-scripts.js"></script>
 <script src="assets/js/moment.min.js"></script>
+<script type="text/javascript" src="assets/js/message.js"></script>
 <script src="assets/js/datepicker.all.min.js"></script>
 <script>
+var selected_time = [];
+
+$(function () {
+	$("#submit").click(function () {
+		let source = $("#source-select").find("option:selected").text(),
+			category = $("#issue-select").find("option:selected").text(),
+			subcategory = "null",
+			title = "null",
+			subtitle = "null",
+			content = $("#form-content").val(),
+			detail = $("#form-info").val() || "null",
+			remark = $("#form-remark").val() || "null",
+			level = 1;
+		if (selected_time.length === 3 && content !== "") {
+			$.ajax({
+				type: "POST",
+				url: "http://127.0.0.1:3000/new",
+				dataType: "json",
+				data: {
+					"data": JSON.stringify({
+						"year": selected_time[0],
+						"month": selected_time[1],
+						"day": selected_time[2],
+						"source": $("#source-select").find("option:selected").text(),
+						"category": $("#issue-select").find("option:selected").text(),
+						"subcategory": "null",
+						"title": "null",
+						"subtitle": "null",
+						"content": $("#form-content").val(),
+						"detail": $("#form-info").val() || "null",
+						"remark": $("#form-remark").val() || "null",
+						"level": 1
+					})
+				},
+				success: function (result) {
+					console.log(result);
+					$.message("提交成功");
+					setTimeout(function () {
+						window.location.reload();
+					}, 3000);
+				}
+			});
+		} else {
+			$.message({
+				message:'至少填写时间和反映内容',
+				type:'warning'
+			});
+		}
+	});
+
+	$("#reset").click(function () {
+		$("#subcategory").val("");
+		$("#form-content").val("");
+		$("#form-info").val("");
+		$("#form-remark").val("");
+	});
+});
+
 $(function() {
 	var DATAPICKERAPI = {
 		// 默认input显示当前月,自己获取后填充
@@ -314,7 +374,8 @@ $(function() {
 			day: '-7'
 		}],
 		hide: function() {
-			console.info(this.$input.eq(0).val().split('-'))
+			selected_time = this.$input.eq(0).val().split('-');
+			console.info(this.$input.eq(0).val().split('-'));
 		}
 	});
 });
