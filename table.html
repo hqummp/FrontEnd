@@ -162,6 +162,9 @@
 									<th>
 										反映内容
 									</th>
+									<th width="5%">
+										详情
+									</th>
 									<th width="15%">
 										操作
 									</th>
@@ -266,6 +269,84 @@
 	                                    </div>
 	                                </div>
 	                            </div>
+								<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	                                <div class="modal-dialog">
+	                                    <div class="modal-content">
+	                                        <div class="modal-header">
+	                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                                            <h4 class="modal-title" id="myModalLabel">详情</h4>
+	                                        </div>
+	                                        <div class="modal-body" style="padding: 0px;">
+												<div class="col-lg-6">
+				                                    <h4>反应相关分类信息</h4>
+													<form role="form">
+														<div class="form-group">
+				                                            <label>请填写日期</label>
+				                                            <br/>
+				                                            <div id="timepicker" class="c-datepicker-date-editor c-datepicker-single-editor J-datepicker-day mt10">
+				                                                <i class="c-datepicker-range__icon kxiconfont icon-clock"></i>
+				                                                <input id="timepicker-modal-value" type="text" autocomplete="off" name="" placeholder="选择日期" class=" c-datepicker-data-input only-date" value="">
+				                                            </div>
+														</div>
+				                                        <div>
+															<label>反应平台</label>
+															<select id="source-modal-detail" class="form-control">
+				                                                <option>市长公开电话</option>
+				                                                <option>市长信箱</option>
+				                                                <option>网络新媒体</option>
+				                                                <option>区长信箱</option>
+				                                                <option>人民网</option>
+				                                                <option>文明办</option>
+				                                                <option>网络理政信箱督办单</option>
+				                                            </select>
+														</div>
+				                                        <div class="form-group">
+															<label>反应问题</label>
+															<select id="issue-modal-detail" class="form-control">
+				                                                <option>环境保护</option>
+				                                                <option>城市管理</option>
+				                                                <option>社会事务</option>
+				                                                <option>规划建设</option>
+				                                                <option>征地拆迁</option>
+				                                                <option>物业管理</option>
+				                                                <option>干部管理</option>
+				                                                <option>合同纠纷</option>
+				                                                <option>社会治安</option>
+				                                                <option>换届选举</option>
+				                                            </select>
+														</div>
+														<div class="form-group">
+															<label>附加标签</label>
+															<input id="form-modal-subtitle" class="form-control" placeholder="子问题">
+														</div>
+													</form>
+												</div>
+												<!-- /.col-lg-6 (nested) -->
+												<div class="col-lg-6">
+													<h4>反应内容填写</h4>
+													<form role="form">
+				                                        <div class="form-group">
+															<label>反应内容</label>
+															<textarea id="form-modal-content" class="form-control" rows="2"></textarea>
+														</div>
+				                                        <div class="form-group">
+															<label>详细信息</label>
+															<textarea id="form-modal-info" class="form-control" rows="4"></textarea>
+														</div>
+				                                        <div class="form-group">
+															<label>备注</label>
+															<textarea id="form-modal-remark" class="form-control" rows="1"></textarea>
+														</div>
+													</form>
+												</div>
+												<!-- /.col-lg-6 (nested) -->
+											</div>
+	                                        <div class="modal-footer">
+	                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
 							</div>
 						</div>
 					</div>
@@ -354,6 +435,88 @@ function modifiy (_id, source, year, month, day, category, content) {
 			break;
 	}
 	var issue_option = document.getElementById('issue-select').children;
+	switch (category) {
+		case "环境保护":
+			issue_option[0].selected=true;
+			break;
+		case "城市管理":
+			issue_option[1].selected=true;
+			break;
+		case "社会事务":
+			issue_option[2].selected=true;
+			break;
+		case "规划建设":
+			issue_option[3].selected=true;
+			break;
+		case "征地拆迁":
+			issue_option[4].selected=true;
+			break;
+		case "物业管理":
+			issue_option[5].selected=true;
+			break;
+		case "干部管理":
+			issue_option[6].selected=true;
+			break;
+		case "合同纠纷":
+			issue_option[7].selected=true;
+			break;
+		case "社会治安":
+			issue_option[8].selected=true;
+			break;
+		case "换届选举":
+			issue_option[9].selected=true;
+			break;
+	}
+}
+
+function detail (_id, source, year, month, day, category, content) {
+	console.log(_id + source + year + month + day + category + content);
+	modify_id = _id;
+	$('.J-datepicker-day').datePicker({
+		hasShortcut: true,
+		format: 'YYYY-MM-DD',
+		shortcutOptions: [{
+			name: '今天',
+			day: '0'
+		}, {
+			name: '昨天',
+			day: '-1'
+		}, {
+			name: '一周前',
+			day: '-7'
+		}],
+		hide: function() {
+			selected_time = this.$input.eq(0).val().split('-');
+		}
+	});
+	console.log(selected_time);
+	$("#timepicker-modal-value").val(year + "-" + month + "-" + day)
+	$('#form-modal-content').text(content);
+	var source_options = document.getElementById('source-modal-detail').children;
+	switch (source) {
+		case "市长公开电话":
+			source_options[0].selected=true;
+			break;
+		case "市长信箱":
+			source_options[1].selected=true;
+			break;
+		case "网络新媒体":
+			source_options[2].selected=true;
+			break;
+		case "区长信箱":
+			source_options[3].selected=true;
+			break;
+		case "人民网":
+			source_options[4].selected=true;
+			break;
+		case "文明热线":
+			source_options[5].selected=true;
+			break;
+		case "网络理政信箱督办单":
+			source_options[6].selected=true;
+			break;
+	}
+	var issue_option = document.getElementById('issue-modal-detail').children;
 	switch (category) {
 		case "环境保护":
 			issue_option[0].selected=true;
@@ -522,9 +685,17 @@ $(document).ready(function() {
 			data: 'content'
 		} ],
 		columnDefs: [{
-			targets: 7,
+			targets: 8,
 			render: function(data, type, row) {
 				return '<div style="line-height:20px;">&nbsp;<button class="btn btn-primary" data-toggle="modal" data-target="#modifyModal" id="modifiy_' + row._id + '" onclick="modifiy(\'' + row._id + '\', \'' + row.source + '\', \'' + row.year + '\', \'' + row.month + '\', \'' + row.day + '\', \'' + row.category + '\', \'' + row.content + '\');"><i class="fa fa-edit"></i>修改</button>&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" id="remove_' + row._id + '" onclick="remove(\'' + row._id + '\')"><i class="fa fa-pencil"></i>删除</button></div>';
+			}
+		}, {
+			"orderable": false,
+			"targets": 8
+		}, {
+			targets: 7,
+			render: function(data, type, row) {
+				return '<div style="line-height:20px;"><button class="btn btn-info" data-toggle="modal" data-target="#detailModal" id="detail_' + row._id + '" onclick="detail(\'' + row._id + '\', \'' + row.source + '\', \'' + row.year + '\', \'' + row.month + '\', \'' + row.day + '\', \'' + row.category + '\', \'' + row.content + '\');">详情</button></div>';
 			}
 		}, {
 			"orderable": false,

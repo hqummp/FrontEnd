@@ -12,6 +12,7 @@
 <!-- Google Fonts-->
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
 <link href="assets/css/datepicker.css" rel="stylesheet">
+<link href="assets/css/message.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 <div id="wrapper">
@@ -221,7 +222,7 @@
                                     <option>请选择</option>
                                     <option>精确到年</option>
                                     <option>精确到月</option>
-                                    <option>精确到日</option>
+                                    <!--<option>精确到日</option>-->
                                 </select>
                             </div>
                             <div id="timepicker" class="form-group" style="display: none">
@@ -229,17 +230,19 @@
                                 <br/>
                                 <div id="time_start" class="c-datepicker-date-editor c-datepicker-single-editor mt10">
                                     <i class="c-datepicker-range__icon kxiconfont icon-clock"></i>
-                                    <input type="text" autocomplete="off" name="" placeholder="开始时间" class=" c-datepicker-data-input only-date" value="">
+                                    <input id="filter_time_start" type="text" autocomplete="off" name="" placeholder="开始时间" class=" c-datepicker-data-input only-date" value="">
                                 </div>
                                 &nbsp;&nbsp;&nbsp;～&nbsp;&nbsp;&nbsp;
                                 <div id="time_end" class="c-datepicker-date-editor c-datepicker-single-editor mt10">
                                     <i class="c-datepicker-range__icon kxiconfont icon-clock"></i>
-                                    <input type="text" autocomplete="off" name="" placeholder="结束时间" class=" c-datepicker-data-input only-date" value="">
+                                    <input id="filter_time_end" type="text" autocomplete="off" name="" placeholder="结束时间" class=" c-datepicker-data-input only-date" value="">
                                 </div>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <button id="category-detail-analysis-button" type="button" class="btn btn-default">确定</button>
                             </div>
 							<div id="category-detail-analysis-chart">
+							</div>
+							<div id="category-detail-analysis-line-chart">
 							</div>
 						</div>
 					</div>
@@ -268,6 +271,7 @@
 <script src="https://cdn.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
 <script src="http://cdn.hcharts.cn/highcharts/modules/export-data.js"></script>
 <script src="assets/js/moment.min.js"></script>
+<script type="text/javascript" src="assets/js/message.js"></script>
 <script src="assets/js/datepicker.all.min.js"></script>
 <script>
 var chart = null;
@@ -592,13 +596,208 @@ $(function() {
             case "精确到月":
                 time_selector_init('YYYY-MM');
                 break;
-            case "精确到日":
-                time_selector_init('YYYY-MM-DD');
-                break;
+			case "精确到日":
+				time_selector_init('YYYY-MM-DD');
+				break;
         }
         $("#timepicker").show();
     });
 
+	async function get_filter_range (format) {
+		let start_time = $('#filter_time_start').val().split('-');
+		let end_time = $('#filter_time_end').val().split('-');
+		if (start_time.length !== end_time.length) {
+			$.message({
+				message:'请检查筛选日期范围',
+				type:'warning'
+			});
+			return;
+		}
+
+		if (format === "year" && (start_time.length != 1 || end_time.length != 1)) {
+			console.log("Format err...");
+			$.message({
+				message:'请检查筛选日期格式',
+				type:'warning'
+			});
+			return;
+		}
+
+		if (format === "month" && (start_time.length != 2 || end_time.length != 2)) {
+			console.log("Format err...");
+			$.message({
+				message:'请检查筛选日期格式',
+				type:'warning'
+			});
+			return;
+		}
+
+		if (parseInt(start_time[0]) > parseInt(end_time[0])) {
+			$.message({
+				message:'请检查筛选日期范围',
+				type:'warning'
+			});
+			return;
+		}
+
+		if ((parseInt(start_time[0]) <= parseInt(end_time[0])) && (parseInt(start_time[1]) > parseInt(end_time[1]))) {
+			$.message({
+				message:'请检查筛选日期范围',
+				type:'warning'
+			});
+			return;
+		}
+
+		var data = {
+			"key": [],
+			"data": []
+		};
+
+		switch (format) {
+			case "year":
+				if (start_time[0] == end_time[0]) {
+					data.key = [start_time[0] + '年'];
+					data.data = [alldata.filter(function (value) {return (value.year == start_time[0] && value.category == $("#issue-select").find("option:selected").text())}).length];
+				} else {
+					for (let i = parseInt(start_time[0]); i <= parseInt(end_time[0]); i++) {
+						data.key.push(i + '年');
+						console.log(i);
+						data.data.push(alldata.filter(function (value) {return (value.year == i && value.category == $("#issue-select").find("option:selected").text())}).length);
+					}
+				}
+				break;
+			case "month":
+				if (start_time[0] == end_time[0]) {
+					for (let i = parseInt(start_time[1]); i <= parseInt(end_time[1]); i++) {
+						data.key.push(start_time[0] + '年' + i + '月');
+						console.log(alldata.filter(function (value) {return (value.year == start_time[0] && value.month == i && value.category == $("#issue-select").find("option:selected").text())}));
+						data.data.push(alldata.filter(function (value) {return (value.year == start_time[0] && value.month == i && value.category == $("#issue-select").find("option:selected").text())}).length);
+					}
+				} else {
+					console.log("Cross year...");
+				}
+				break;
+			case "day":
+				console.log("Not supported yet...");
+				return;
+				break;
+		}
+		return data;
+	}
+
+	function category_detail_analysis_chart_init (chart_data) {
+		console.log(chart_data);
+		$("#category-detail-analysis-chart").highcharts({
+            lang: lang_setting,
+            chart: {
+                type: 'column',
+                zoomType: 'x',
+                panning: true
+            },
+            xAxis: {
+                categories: chart_data.key,
+                title: {
+                    text: '时间范围'
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '件数 (个)'
+                }
+            },
+            title: {
+                text: '反映问题统计柱状图'
+            },
+			subtitle:{
+				text: '问题分类：' + $("#issue-select").find("option:selected").text() + '	时间范围：' + chart_data.key[0] + '～' + chart_data.key[chart_data.key.length - 1]
+			},
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                column: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            series: [{
+                name: '件数',
+                data: chart_data.data
+            }]
+        });
+		$("#category-detail-analysis-line-chart").highcharts({
+            lang: lang_setting,
+            chart: {
+                zoomType: 'x',
+                panning: true
+            },
+            xAxis: {
+                categories: chart_data.key,
+                title: {
+                    text: '时间范围'
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '件数 (个)'
+                }
+            },
+            title: {
+                text: '反映问题统计折线图'
+            },
+			subtitle:{
+				text: '问题分类：' + $("#issue-select").find("option:selected").text() + '	时间范围：' + chart_data.key[0] + '～' + chart_data.key[chart_data.key.length - 1]
+			},
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                column: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            series: [{
+                name: '件数',
+                data: chart_data.data
+            }]
+        });
+	}
+
+	$('#category-detail-analysis-button').click(async function () {
+		console.log("start...");
+		switch ($("#precision-select").find("option:selected").text()) {
+            case "精确到年":
+                var result = await get_filter_range('year');
+				if (typeof result === "undefined") {
+					$.message({
+						message:'请检查筛选日期范围',
+						type:'warning'
+					});
+				} else {
+					category_detail_analysis_chart_init(result);
+				}
+                break;
+            case "精确到月":
+                var result = await get_filter_range('month');
+				if (typeof result === "undefined") {
+					$.message({
+						message:'请检查筛选日期范围',
+						type:'warning'
+					});
+				} else {
+					category_detail_analysis_chart_init(result);
+				}
+                break;
+			case "精确到日":
+				get_filter_range('day');
+				break;
+        }
+	});
 });
 </script>
 </body>
